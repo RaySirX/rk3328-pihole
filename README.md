@@ -8,6 +8,8 @@
   - **'pi' user has been removed!**
 - [How can I mount a Raspberry Pi Linux distro image?](https://raspberrypi.stackexchange.com/questions/13137/how-can-i-mount-a-raspberry-pi-linux-distro-image)
 
+## Manual Installation and Setup
+
 **Instructions are to be performed on linux!**
 
 1. `wget https://distro.libre.computer/ci/raspbian/11/2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz`

@@ -1,0 +1,17 @@
+#!/bin/bash -e
+
+default_pi_repo=${DEFAULT_PI_REPO:=https://distro.libre.computer/ci/raspbian/11}
+default_pi_distro=${DEFAULT_PI_DISTRO:=2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz}
+
+TMPDIR=${TMPDIR:=$(mktemp -d)}
+mkdir -p ${TMPDIR?}
+
+DISTRODIR=${DISTRODIR:=/mnt/RASPBIAN}
+mkdir -p ${DISTRODIR?}
+
+losetup -P /dev/loop0 ${TMPDIR}/${default_pi_distro}
+mkdir /mnt/raspbian
+mount /dev/loop0p2 ${DISTRODIR}
+mount /dev/loop0p1 ${DISTRODIR}/boot
+
+df -h ${DISTRODIR} ${DISTRODIR}/boot

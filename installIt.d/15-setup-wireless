@@ -1,0 +1,21 @@
+#!/bin/bash -xe
+pi_mount=${1?'command missing arg PI_MOUNT'}
+
+default_pi_ssid=${DEFAULT_PI_SSID:=sky}
+default_pi_ssid_pass=${DEFAULT_PI_SSID_PASS:=5A4B98A7C30EDF09A2332F89F9}
+cat << EOF > ${pi_mount}/wpa_supplicant.conf
+country=ca
+ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1
+network={
+  ssid="NETWORK_SSID"
+  scan_ssid=1
+  psk="NETWORK_PASSWORD"
+  key_mgmt=WPA-PSK
+}
+EOF
+
+
+
+
+

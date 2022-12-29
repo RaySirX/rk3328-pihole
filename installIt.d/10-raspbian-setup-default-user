@@ -1,0 +1,9 @@
+#!/bin/bash -xe
+pi_mount=${1?'command missing arg PI_MOUNT'}
+
+default_pi_user=${DEFAULT_PI_USER:=pi}
+default_pi_pass=${DEFAULT_PI_PASS:=defaultpi1}
+
+cat << EOF > ${pi_mount}/userconf.txt
+${default_pi_user}:$(echo ${default_pi_pass} | openssl passwd -6 -stdin)
+EOF

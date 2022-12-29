@@ -1,0 +1,19 @@
+#!/bin/bash -e
+
+default_pi_repo=${DEFAULT_PI_REPO:=https://distro.libre.computer/ci/raspbian/11}
+default_pi_distro=${DEFAULT_PI_DISTRO:=2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz}
+
+TMPDIR=${TMPDIR:=$(mktemp -d)}
+mkdir -p ${TMPDIR}
+
+wget -O ${TMPDIR}/${default_pi_distro} ${default_pi_repo}/${default_pi_distro}
+wget -O ${TMPDIR}/SHA256SUMS ${default_pi_repo}/SHA256SUMS
+
+wget_distro_sha256sum=$(sha256sum ${TMPDIR}/${default_pi_distro} | awk '{ print $1 }')
+expected_sha256sum=$(grep ${default_pi_distro} ${TMPDIR}/SHA256SUMS | awk '{ print $1 }')
+
+if [ "${wget_distro_sha256sum}" != "${expected_sha256sum:=NotFoundIn_SHA256SUMS_${default_pi_distro}}" ]; then
+   echo "${TMPDIR}/${default_pi_distro} checksum ${wget_distro_sha256sum} does not match SHA256SUMS ${expected_sha256sum}" 
+   exit 1
+fi
+

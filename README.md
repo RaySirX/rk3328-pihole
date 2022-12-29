@@ -4,9 +4,9 @@
 - [Raspbian images](https://distro.libre.computer/ci/raspbian/11/)
 - [Installing Raspbian on an SD Memory Card](https://kalitut.com/installing-raspbian-on-sd-card/)
 - [Raspbian 11 Bullseye for Libre Computer Boards](https://hub.libre.computer/t/raspbian-11-bullseye-for-libre-computer-boards/82)
-[An update to Raspberry Pi OS bullseye](https://www.raspberrypi.com/news/raspberry-pi-bullseye-update-april-2022/)
+- [An update to Raspberry Pi OS bullseye](https://www.raspberrypi.com/news/raspberry-pi-bullseye-update-april-2022/)
   - **'pi' user has been removed!**
-[How can I mount a Raspberry Pi Linux distro image?](https://raspberrypi.stackexchange.com/questions/13137/how-can-i-mount-a-raspberry-pi-linux-distro-image)
+- [How can I mount a Raspberry Pi Linux distro image?](https://raspberrypi.stackexchange.com/questions/13137/how-can-i-mount-a-raspberry-pi-linux-distro-image)
 
 **Instructions are to be performed on linux!**
 

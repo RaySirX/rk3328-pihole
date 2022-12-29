@@ -17,12 +17,10 @@
 
 **Instructions are to be performed on linux!**
 
-1. Download image ```
-	wget https://distro.libre.computer/ci/raspbian/11/2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz
-```
-1. uncompress image ```
-unxz -k 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz
-```
+1. Download image
+	`wget https://distro.libre.computer/ci/raspbian/11/2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz`
+1. uncompress image
+	`unxz -k 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz`
 1. mount image
 ```
 	losetup -P /dev/loop0 2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img

@@ -43,5 +43,45 @@
 	root@raymond-main:/home/rtai/Projects/RaySirX/rk3328-pihole# sync
 	root@raymond-main:/home/rtai/Projects/RaySirX/rk3328-pihole#
 
-1. Copy image to SD card
+## Using Bash scripts installIt.d/*
+
+1. configure defaults
+  - DEFAULT\_PI\_REPO - http endpoint and path to raspbian image
+  - DEFAULT\_PI\_DISTRO - image filename
+  - DEFAULT\_PI\_DISTRO\_LOCAL\_DIR - download destination directory of the image
+  - DEFAULT\_PI\_DISTRO\_MOUNT\_DIR - mount point directory where image will be mounted
+  - DEFAULT\_PI\_USER - initial user account to be created - see .secrets:DEFAULT\_PI\_USER\_PASS
+  - DEFAULT\_PI\_SSID - wifi network name - see .secrets:DEFAULT\_PI\_SSID\_PASS
+
+`source .defaults`
+
+1. configure .secrets
+  - DEFAULT\_PI\_SSID\_PASS - wifi password
+  - DEFAULT\_PI\_USER\_PASS - initial user password
+
+`source .secrets`
+
+1. Download image
+`./installIt.d/01-download-raspbian-image`
+
+1. Mount image file
+`./installIt.d/02-mount-raspbian-image`
+
+1. Setup default user
+`./installIt.d/10-raspbian-setup-default-user`
+
+1. Setup wireless
+`./installIt.d/15-setup-wireless`
+
+1. Enable ssh
+`./installIt.d/20-enable-ssh`
+
+1. Set hostname
+`./installIt.d/25-set-hostname`
+
+1. Unmount image
+`./installIt.d/99-unmount-raspbian-image`
+
+# Copy image to SD card
 `dd bs=4M if=/dev/loop0 of=/dev/sdd status=progress`
+

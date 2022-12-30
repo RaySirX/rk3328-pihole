@@ -4,7 +4,7 @@
 #U    25-set-hostname - image set hostname
 #U
 #U SYNOPSIS
-#U    25-set-hostname <pi_distro_file> <pi_hostname>
+#U    25-set-hostname <pi_distro_mount_dir> <pi_hostname>
 #U
 #U DESCRIPTION
 #U    Inject raspbian wifi into wpa_supplicant.conf into image

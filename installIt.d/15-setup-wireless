@@ -26,7 +26,7 @@ pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
 pi_ssid=${2:-${DEFAULT_PI_SSID?"$(usage)"}}
 pi_ssid_pass=${3:-${DEFAULT_PI_SSID_PASS?"$(usage)"}}
 
-cat << EOF > ${pi_distro_mount_dir}/wpa_supplicant.conf
+cat << EOF > ${pi_distro_mount_dir}/boot/wpa_supplicant.conf
 country=ca
 ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1

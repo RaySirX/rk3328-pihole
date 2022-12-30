@@ -1,10 +1,13 @@
 export DEFAULT_PI_REPO=${DEFAULT_PI_REPO:-https://distro.libre.computer/ci/raspbian/11}
-export DEFAULT_PI_DISTRO=${DEFAULT_PI_DISTRO:-2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz}
+#export DEFAULT_PI_DISTRO=${DEFAULT_PI_DISTRO:-2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz}
+export DEFAULT_PI_DISTRO=${DEFAULT_PI_DISTRO:-2022-09-22-raspbian-bullseye-arm64-lite+roc-rk3328-cc.img.xz}
 export DEFAULT_PI_DISTRO_LOCAL_DIR=${DEFAULT_PI_DISTRO_LOCAL_DIR:-$(mktemp -d)}
 export DEFAULT_PI_DISTRO_MOUNT_DIR=${DEFAILT_PI_DISTRO_MOUNT_DIR:-${DEFAULT_PI_DISTRO_LOCAL_DIR}/mnt}
 
 export DEFAULT_PI_USER=${DEFAULT_PI_USER:-pi}
 #export DEFAULT_PI_USER_PASS=${DEFAULT_PI_USER_PASS?'check .secret file'}
+
+export DEFAULT_PI_DNS_DOMAIN=${DEFAULT_PI_DNS_DOMAIN:-home}
 
 export DEFAULT_PI_SSID=${DEFAULT_PI_SSID:-sky}
 #export DEFAULT_PI_SSID_PASS=${DEFAULT_PI_SSID_PASS?'check .secret file'}

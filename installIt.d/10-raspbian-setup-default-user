@@ -27,6 +27,6 @@ pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
 pi_user=${2:-${DEFAULT_PI_USER?"$(usage)"}}
 pi_user_pass=${3:-${DEFAULT_PI_USER_PASS?"$(usage)"}}
 
-cat << EOF > ${pi_distro_mount_dir}/userconf.txt
+cat << EOF > ${pi_distro_mount_dir}/boot/userconf.txt
 ${pi_user}:$(echo ${pi_user_pass} | openssl passwd -6 -stdin)
 EOF

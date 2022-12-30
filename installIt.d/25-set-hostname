@@ -4,7 +4,7 @@
 #U    25-set-hostname - image set hostname
 #U
 #U SYNOPSIS
-#U    25-set-hostname <pi_distro_mount_dir> <pi_hostname>
+#U    25-set-hostname <pi_distro_mount_dir> <pi_hostname> <pi_dns_domain>
 #U
 #U DESCRIPTION
 #U    Inject raspbian wifi into wpa_supplicant.conf into image
@@ -12,7 +12,8 @@
 #U OPTIONS
 #U    
 #U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - image mount point directory
-#U    pi_hostname|[DEFAULT_PI_HOSTNAME]                 - hostname
+#U    pi_hostname|[DEFAULT_PI_HOSTNAME]                 - hostname unqualified
+#U    pi_dns_domain|[DEFAULT_PI_DNS_DOMAIN]             - DNS domain
 #U
 #
 function usage() {
@@ -23,6 +24,11 @@ function usage() {
 
 pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
 pi_hostname=${2:-${DEFAULT_PI_HOSTNAME?"$(usage)"}}
+pi_dns_domain=${3:-${DEFAULT_PI_DNS_DOMAIN?"$(usage)"}}
 
-echo "${pi_hostname}" > ${pi_distro_mount_dir}/etc/hostname
+echo "${pi_hostname}.${pi_dns_domain}" > ${pi_distro_mount_dir}/etc/hostname
 
+sed -i '/^127.0.1.1/d' ${pi_distro_mount_dir}/etc/hosts
+cat << EOF >> ${pi_distro_mount_dir}/etc/hosts
+127.0.1.1  ${pi_hostname} ${pi_hostname}.${pi_dns_domain}
+EOF

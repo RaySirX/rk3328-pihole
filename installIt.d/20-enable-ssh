@@ -22,5 +22,5 @@ function usage() {
 
 pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
 
-touch ${pi_distro_mount_dir}/ssh
+touch ${pi_distro_mount_dir}/boot/ssh
 

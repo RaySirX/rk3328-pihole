@@ -1,19 +1,42 @@
 #!/bin/bash -e
+#U
+#U NAME
+#U    01-download-raspbian-image - download raspbian image
+#U
+#U SYNOPSIS
+#U    01-download-raspbian-image <pi_distro_file> <pi_distro_dir> <pi_distro_local_dir>
+#U
+#U DESCRIPTION
+#U    Download (wget) <pi_repo>/<pi_distro> "xz" compressed image file to <pi_distro_local_dir>
+#U    Download (wget) <pi_repo>/SHA256SUMS and validate checksum
+#U
+#U OPTIONS
+#U    
+#U    pi_repo|[DEFAULT_PI_REPO]                         - http PI repo including directory
+#U    pi_distro|[DEFAULT_PI_DISTRO]                     - PI distro file name no path
+#U    pi_distro_local_dir|[DEFAULT_PI_DISTRO_LOCAL_DIR] - local download destination directory
+#U
+#
+function usage() {
+# usage - Any comment in script starting with '#U' will show up in "usage"
+  egrep "^#U" $0 | sed -e 's/^#U //g' -e 's/^#U//g'
+  exit 1
+}
 
-default_pi_repo=${DEFAULT_PI_REPO:=https://distro.libre.computer/ci/raspbian/11}
-default_pi_distro=${DEFAULT_PI_DISTRO:=2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz}
+pi_repo=${1:-${DEFAULT_PI_REPO?"$(usage)"}}
+pi_distro=${2:-${DEFAULT_PI_DISTRO?"$(usage)"}}
+pi_distro_local_dir=${3:-${DEFAULT_PI_DISTRO_LOCAL_DIR?"$(usage)"}}
 
-TMPDIR=${TMPDIR:=$(mktemp -d)}
-mkdir -p ${TMPDIR}
+mkdir -p ${pi_distro_local_dir}
 
-wget -O ${TMPDIR}/${default_pi_distro} ${default_pi_repo}/${default_pi_distro}
-wget -O ${TMPDIR}/SHA256SUMS ${default_pi_repo}/SHA256SUMS
+wget -O ${pi_distro_local_dir}/${pi_distro} ${pi_repo}/${pi_distro}
+wget -O ${pi_distro_local_dir}/SHA256SUMS ${pi_repo}/SHA256SUMS
 
-wget_distro_sha256sum=$(sha256sum ${TMPDIR}/${default_pi_distro} | awk '{ print $1 }')
-expected_sha256sum=$(grep ${default_pi_distro} ${TMPDIR}/SHA256SUMS | awk '{ print $1 }')
+wget_distro_sha256sum=$(sha256sum ${pi_distro_local_dir}/${pi_distro} | awk '{ print $1 }')
+expected_sha256sum=$(grep ${pi_distro} ${pi_distro_local_dir}/SHA256SUMS | awk '{ print $1 }')
 
-if [ "${wget_distro_sha256sum}" != "${expected_sha256sum:=NotFoundIn_SHA256SUMS_${default_pi_distro}}" ]; then
-   echo "${TMPDIR}/${default_pi_distro} checksum ${wget_distro_sha256sum} does not match SHA256SUMS ${expected_sha256sum}" 
+if [ "${wget_distro_sha256sum}" != "${expected_sha256sum:=NotFoundIn_SHA256SUMS_${pi_distro}}" ]; then
+   echo "${pi_distro_local_dir}/${pi_distro} checksum ${wget_distro_sha256sum} does not match SHA256SUMS ${expected_sha256sum}" 
    exit 1
 fi
 

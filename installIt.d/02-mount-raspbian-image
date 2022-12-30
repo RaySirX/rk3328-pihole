@@ -13,7 +13,7 @@
 #U
 #U OPTIONS
 #U    pi_distro_file                                    - raspbian .img distro full path file
-#U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - mount point directory
+#U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - image mount point directory
 #U
 #
 function usage() {

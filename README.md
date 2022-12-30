@@ -43,5 +43,5 @@
 	root@raymond-main:/home/rtai/Projects/RaySirX/rk3328-pihole# sync
 	root@raymond-main:/home/rtai/Projects/RaySirX/rk3328-pihole#
 
-
-
+1. Copy image to SD card
+`dd bs=4M if=/dev/loop0 of=/dev/sdd status=progress`

@@ -1,0 +1,47 @@
+#!/bin/bash -e
+#
+#U
+#U NAME
+#U    99-unmount-raspbian-image - Unmount raspbian image
+#U
+#U SYNOPSIS
+#U    99-unmount-raspbian-image <>
+#U
+#U DESCRIPTION
+#U    Uncompress <pi_distro_file> if required
+#U    Mount raspbian .img distro file <pi_distro_file> to mount point <pi_distro_mount_dir>
+#U
+#U OPTIONS
+#U    pi_distro_file                                    - raspbian .img distro full path file
+#U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - mount point directory
+#U
+function usage() {
+# usage - Any comment in script starting with '#U' will show up in "usage"
+  egrep "^#U" $0 | sed -e 's/^#U //g' -e 's/^#U//g'
+  exit 1
+}
+
+pi_distro_mount_dir=${1:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
+
+if [ ! -d ${pi_distro_mount_dir} ]; then
+   echo "pi_distro_mount_dir ${pi_distro_mount_dir} does not exist.  Nothing to do."
+   exit
+fi
+
+#set -x
+df -h ${pi_distro_mount_dir}
+losetup -l
+#set +x
+
+echo
+
+umount ${pi_distro_mount_dir}/boot
+umount ${pi_distro_mount_dir}
+
+losetup -d /dev/loop0
+rmdir ${pi_distro_mount_dir}
+
+#set -x
+losetup -l
+df -h ${pi_distro_mount_dir} ${pi_distro_mount_dir}/boot
+#set +x

@@ -1,17 +1,49 @@
 #!/bin/bash -e
+#
+#U
+#U NAME
+#U    02-mount-raspbian-image - Mount raspbian .img distro file
+#U
+#U SYNOPSIS
+#U    02-mount-raspbian-image <pi_distro_file> <pi_distro_mount_dir>
+#U
+#U DESCRIPTION
+#U    Uncompress <pi_distro_file> if required
+#U    Mount raspbian .img distro file <pi_distro_file> to mount point <pi_distro_mount_dir>
+#U
+#U OPTIONS
+#U    pi_distro_file                                    - raspbian .img distro full path file
+#U    pi_distro_mount_dir|[DEFAULT_PI_DISTRO_MOUNT_DIR] - mount point directory
+#U
+#
+function usage() {
+# usage - Any comment in script starting with '#U' will show up in "usage"
+  egrep "^#U" $0 | sed -e 's/^#U //g' -e 's/^#U//g'
+  exit 1
+}
 
-default_pi_repo=${DEFAULT_PI_REPO:=https://distro.libre.computer/ci/raspbian/11}
-default_pi_distro=${DEFAULT_PI_DISTRO:=2022-09-22-raspbian-bullseye-arm64+roc-rk3328-cc.img.xz}
+pi_distro_file=${1?"$(usage)"}
+pi_distro_mount_dir=${2:-${DEFAULT_PI_DISTRO_MOUNT_DIR?"$(usage)"}}
 
-TMPDIR=${TMPDIR:=$(mktemp -d)}
-mkdir -p ${TMPDIR?}
+mkdir -p ${pi_distro_mount_dir}
 
-DISTRODIR=${DISTRODIR:=/mnt/RASPBIAN}
-mkdir -p ${DISTRODIR?}
+if [ ! -f ${pi_distro_file} ]; then
+   echo "Not found ${pi_distro_file}. Nothing to do."
+   exit
+fi
 
-losetup -P /dev/loop0 ${TMPDIR}/${default_pi_distro}
-mkdir /mnt/raspbian
-mount /dev/loop0p2 ${DISTRODIR}
-mount /dev/loop0p1 ${DISTRODIR}/boot
+if (file ${pi_distro_file} | grep 'XZ compressed data'); then
+   unxz -v -c ${pi_distro_file} > ${pi_distro_file}.img
+   pi_distro_file=${pi_distro_file}.img 
+fi
 
-df -h ${DISTRODIR} ${DISTRODIR}/boot
+
+losetup -P /dev/loop0 ${pi_distro_file}
+
+mount /dev/loop0p2 ${pi_distro_mount_dir}
+mount /dev/loop0p1 ${pi_distro_mount_dir}/boot
+
+set -x
+losetup -l
+df -h ${pi_distro_mount_dir} ${pi_distro_mount_dir}/boot
+set +x

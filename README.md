@@ -65,7 +65,7 @@
 `./installIt.d/01-download-raspbian-image`
 
 1. Mount image file
-`./installIt.d/02-mount-raspbian-image`
+`./installIt.d/02-mount-raspbian-image` ./installIt.d/02-mount-raspbian-image ${DEFAULT\_PI\_DISTRO\_LOCAL\_DIR?}/${DEFAULT\_PI\_DISTRO?}
 
 1. Setup default user
 `./installIt.d/10-raspbian-setup-default-user`
@@ -84,4 +84,4 @@
 
 # Copy image to SD card
 `dd bs=4M if=/dev/loop0 of=/dev/sdd status=progress`
-
+*DOUBLE DOUBLE CHECK the output device!*

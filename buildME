@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+[ -f defaults ] && source defaults
+[ -f .secret ] && source .secrets
+
+for i in installIt.d/*; do
+  echo "$i ---------------------------"
+  if [ -x $i ]; then
+     $i
+  else
+     echo SKIPPED - $i
+  fi
+done

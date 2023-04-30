@@ -29,8 +29,8 @@ pi_distro_local_dir=${3:-${DEFAULT_PI_DISTRO_LOCAL_DIR?"$(usage)"}}
 
 mkdir -p ${pi_distro_local_dir}
 
-wget -O ${pi_distro_local_dir}/${pi_distro} ${pi_repo}/${pi_distro}
-wget -O ${pi_distro_local_dir}/SHA256SUMS ${pi_repo}/SHA256SUMS
+[ -f ${pi_distro_local_dir}/${pi_distro} ] || wget -O ${pi_distro_local_dir}/${pi_distro} ${pi_repo}/${pi_distro}
+[ -f ${pi_distro_local_dir}/SHA256SUMS ] || wget -O ${pi_distro_local_dir}/SHA256SUMS ${pi_repo}/SHA256SUMS
 
 wget_distro_sha256sum=$(sha256sum ${pi_distro_local_dir}/${pi_distro} | awk '{ print $1 }')
 expected_sha256sum=$(grep ${pi_distro} ${pi_distro_local_dir}/SHA256SUMS | awk '{ print $1 }')
